@@ -96,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
         cells[pacmanCurrentIndex].classList.add('pac-man')
+        cells[previousIndex].classList.remove('pac-man')
     }
 
     document.addEventListener('keydown', movePacman)
