@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function createBoard() {
         for (let i = 0; i < layout.length; i++) {
             const cell = document.createElement('div')
+            cell.id = i
             grid.appendChild(cell)
             cells.push(cell)
 
@@ -70,38 +71,53 @@ document.addEventListener('DOMContentLoaded', () => {
     // draw pacmam into the board
 
     let pacmanCurrentIndex = 490
-    let previousIndex
+    // let previousIndex =490
+    // let nextPacmanIndex = 490
     cells[pacmanCurrentIndex].classList.add('pac-man');
 
     // move pac-man
 
     function movePacman(e) {
+        cells[pacmanCurrentIndex].classList.remove('pac-man')
         switch (e.key) {
             case 'ArrowLeft':
-                pacmanCurrentIndex -= 1
-                previousIndex = pacmanCurrentIndex + 1
+                if (
+                    pacmanCurrentIndex % width !== 0 &&
+                    !cells[pacmanCurrentIndex -1 ].classList.contains('wall') &&
+                    !cells[pacmanCurrentIndex -1 ].classList.contains('ghost-lair')
+                ) {
+                    pacmanCurrentIndex -= 1
+                }
+                if (cells[pacmanCurrentIndex-1] === cells[363]) {
+                    pacmanCurrentIndex = 391
+                }
                 break
             case "ArrowRight":
-                pacmanCurrentIndex += 1
-                previousIndex = pacmanCurrentIndex - 1
+                if (
+                    pacmanCurrentIndex % width !== width -1 &&
+                    !cells[pacmanCurrentIndex +1 ].classList.contains('wall') &&
+                    !cells[pacmanCurrentIndex +1 ].classList.contains('ghost-lair')
+                ) {
+                    pacmanCurrentIndex += 1
+                }
+                if (cells[pacmanCurrentIndex+1] === cells[392]) {
+                    pacmanCurrentIndex = 364
+                }
                 break
             case "ArrowUp":
-                pacmanCurrentIndex -= 28
-                previousIndex = pacmanCurrentIndex + 28
-                break
+                pacmanCurrentIndex -= width
+              break
             case "ArrowDown":
-                pacmanCurrentIndex += 28
-                previousIndex = pacmanCurrentIndex - 28
+                pacmanCurrentIndex += width
                 break
-
         }
         cells[pacmanCurrentIndex].classList.add('pac-man')
-        if (cells[pacmanCurrentIndex].classList.contains('pac-dot')) {
-            score += 1
-            scoreDisplay.innerHTML = score
-            cells[pacmanCurrentIndex].classList.remove('pac-dot')
-        }
-        cells[previousIndex].classList.remove('pac-man')
+        // if (cells[pacmanCurrentIndex].classList.contains('pac-dot')) {
+        //     score += 1
+        //     scoreDisplay.innerHTML = score
+        //     cells[pacmanCurrentIndex].classList.remove('pac-dot')
+        // }
+        // cells[previousIndex].classList.remove('pac-man')
     }
 
     document.addEventListener('keydown', movePacman)
