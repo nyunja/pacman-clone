@@ -147,6 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    document.addEventListener('keydown', movePacman);
 
     class Ghost {
         constructor(clasName, startIndex, speed) {
@@ -169,5 +170,10 @@ document.addEventListener('DOMContentLoaded', () => {
         new Ghost('clyde', 379, 500)
     ]
 
-    document.addEventListener('keydown', movePacman)
+    // draw ghosts on the grid
+    ghosts.forEach(ghost => {
+        cells[ghost.startIndex].classList.add(ghost.className);
+        cells[ghost.startIndex].classList.add('ghost');
+        // ghost.timerId = setInterval(ghost.move.bind(ghost), ghost.speed)
+    })
 })
