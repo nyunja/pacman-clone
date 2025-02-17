@@ -105,20 +105,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 break
             case "ArrowUp":
-                pacmanCurrentIndex -= width
-              break
+                if (
+                    pacmanCurrentIndex % width !== 0 &&
+                    !cells[pacmanCurrentIndex - width ].classList.contains('wall') &&
+                    !cells[pacmanCurrentIndex - width ].classList.contains('ghost-lair')
+                ) {
+                    pacmanCurrentIndex -= width
+                }
+                break
             case "ArrowDown":
-                pacmanCurrentIndex += width
+                if (
+                    pacmanCurrentIndex % width !== width -1 &&
+                    !cells[pacmanCurrentIndex + width ].classList.contains('wall') &&
+                    !cells[pacmanCurrentIndex + width ].classList.contains('ghost-lair')
+                ) {
+                    pacmanCurrentIndex += width
+                }
                 break
         }
         cells[pacmanCurrentIndex].classList.add('pac-man')
-        // if (cells[pacmanCurrentIndex].classList.contains('pac-dot')) {
-        //     score += 1
-        //     scoreDisplay.innerHTML = score
-        //     cells[pacmanCurrentIndex].classList.remove('pac-dot')
-        // }
-        // cells[previousIndex].classList.remove('pac-man')
+        eatPacDot()
+
     }
+
+    // pac dot eaten
+    function eatPacDot() {
+        if (cells[pacmanCurrentIndex].classList.contains('pac-dot')) {
+            score += 1
+            scoreDisplay.innerHTML = score
+            cells[pacmanCurrentIndex].classList.remove('pac-dot')
+        }
+    }
+
+    // power pellet power up
 
     document.addEventListener('keydown', movePacman)
 })
