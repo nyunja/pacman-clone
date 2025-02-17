@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const scoreDisplay =document.getElementById('score')
+    const scoreDisplay = document.getElementById('score')
     const width = 28
     let score = 0
     const grid = document.querySelector('.grid')
@@ -43,10 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let cells = [];
 
+    console.log(cells)
+
     // create board
     function createBoard() {
-        for (let i =0; i <layout.length; i++) {
-            const cell =document.createElement('div')
+        for (let i = 0; i < layout.length; i++) {
+            const cell = document.createElement('div')
             grid.appendChild(cell)
             cells.push(cell)
 
@@ -63,4 +65,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     createBoard();
+
+    // create characters
+    // draw pacmam into the board
+
+    let pacmanCurrentIndex = 490
+    let previousIndex
+    cells[pacmanCurrentIndex].classList.add('pac-man');
+
+    // move pac-man
+
+    function movePacman(e) {
+        switch (e.key) {
+            case 'ArrowLeft':
+                pacmanCurrentIndex -= 1
+                previousIndex = pacmanCurrentIndex + 1
+                break
+            case "ArrowRight":
+                pacmanCurrentIndex += 1
+                previousIndex = pacmanCurrentIndex - 1
+                break
+            case "ArrowUp":
+                pacmanCurrentIndex -= 28
+                previousIndex = pacmanCurrentIndex + 28
+                break
+            case "ArrowDown":
+                pacmanCurrentIndex += 28
+                previousIndex = pacmanCurrentIndex - 28
+                break
+
+        }
+        cells[pacmanCurrentIndex].classList.add('pac-man')
+    }
+
+    document.addEventListener('keydown', movePacman)
 })
