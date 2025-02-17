@@ -172,8 +172,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // draw ghosts on the grid
     ghosts.forEach(ghost => {
-        cells[ghost.startIndex].classList.add(ghost.className);
-        cells[ghost.startIndex].classList.add('ghost');
+        cells[ghost.startIndex].classList.add(ghost.className, 'ghost');
+        // cells[ghost.startIndex].classList.add('ghost');
         // ghost.timerId = setInterval(ghost.move.bind(ghost), ghost.speed)
     })
+
+    // move ghosts randomly
+    ghosts.forEach(ghost => moveGhost(ghost));
+
+    function moveGhost(ghost) {
+        console.log(ghost)
+        const directions = [1, -1, -width, width]
+        let direction = directions[Math.floor(Math.random() * directions.length)];
+
+        ghost.timerId = setInterval(() => {
+            // check if next cell has no ghost or wall
+            if (
+                !cells[ghost.currentIndex + direction].classList.contains('ghost') &&
+                !cells[ghost.currentIndex + direction].classList.contains('wall')
+            ) {
+                cells[ghost.currentIndex].classList.remove(ghost.className, 'ghost')
+                ghost.currentIndex += direction
+                cells[ghost.currentIndex].classList.add(ghost.className, 'ghost')
+                // else find a new random direction to go
+            } else {
+                direction = directions[Math.floor(Math.random() * directions.length)];
+            }
+        }, ghost.speed)
+    }
 })
