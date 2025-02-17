@@ -143,8 +143,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cells[pacmanCurrentIndex].classList.contains('power-pellet')) {
             score += 10
             scoreDisplay.innerHTML = score
+            ghosts.forEach(ghost => ghost.isScared = true)
+            setInterval(unscareGhosts, 10000)
             cells[pacmanCurrentIndex].classList.remove('power-pellet')
         }
+    }
+
+    function unscareGhosts() {
+        ghosts.forEach(ghost => ghost.isScared = false)
     }
 
     document.addEventListener('keydown', movePacman);
@@ -191,12 +197,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 !cells[ghost.currentIndex + direction].classList.contains('ghost') &&
                 !cells[ghost.currentIndex + direction].classList.contains('wall')
             ) {
-                cells[ghost.currentIndex].classList.remove(ghost.className, 'ghost')
+                cells[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost')
                 ghost.currentIndex += direction
                 cells[ghost.currentIndex].classList.add(ghost.className, 'ghost')
                 // else find a new random direction to go
             } else {
                 direction = directions[Math.floor(Math.random() * directions.length)];
+            }
+            //if ghost is currently scared
+            if (ghost.isScared) {
+                cells[ghost.currentIndex].classList.add('scared-ghost')
             }
         }, ghost.speed)
     }
