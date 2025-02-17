@@ -124,7 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 break
         }
         cells[pacmanCurrentIndex].classList.add('pac-man')
-        eatPacDot()
+        eatPacDot();
+        powerPelletEaten();
 
     }
 
@@ -138,6 +139,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // power pellet power up
+    function powerPelletEaten() {
+        if (cells[pacmanCurrentIndex].classList.contains('power-pellet')) {
+            score += 10
+            scoreDisplay.innerHTML = score
+            cells[pacmanCurrentIndex].classList.remove('power-pellet')
+        }
+    }
+
+
+    class Ghost {
+        constructor(clasName, startIndex, speed) {
+            this.className = clasName
+            this.startIndex = startIndex
+            this.speed = speed
+            this.currentIndex = startIndex
+            this.isScared = false
+            this.timerId = NamedNodeMap
+            // this.direction = this.getRandomDirection()
+            // this.intervalId = setInterval(this.move.bind(this), this.speed)
+        }
+    }
+
+    // get all ghosts
+    const ghosts = [
+        new Ghost('blinky', 348, 250),
+        new Ghost('pinky', 376, 400),
+        new Ghost('inky', 351, 300),
+        new Ghost('clyde', 379, 500)
+    ]
 
     document.addEventListener('keydown', movePacman)
 })
