@@ -96,6 +96,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
         cells[pacmanCurrentIndex].classList.add('pac-man')
+        if (cells[pacmanCurrentIndex].classList.contains('pac-dot')) {
+            cells[pacmanCurrentIndex].classList.remove('pac-dot')
+        }
         cells[previousIndex].classList.remove('pac-man')
     }
 
